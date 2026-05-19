@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Professional portfolio of <%= portfolio.name %>, built with Node.js, Express.js, and EJS."
+    />
+    <title><%= portfolio.name %> | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/css/styles.css" />
+    <script src="/public/js/theme.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Go to homepage">
+        <span class="brand-mark">ZQ</span>
+        <span>
+          <strong><%= portfolio.name %></strong>
+          <small><%= portfolio.role %></small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#journey">Journey</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <!-- The button is updated by public/js/theme.js after reading the saved theme. -->
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch color theme">
+        <span class="theme-toggle__icon" id="themeIcon">☾</span>
+        <span id="themeLabel">Dark</span>
+      </button>
+    </header>
+
+    <main id="home">
+      <section class="hero section-shell">
+        <div class="hero-copy">
+          <p class="eyebrow">Portfolio website</p>
+          <h1>Building clean, useful web experiences with full-stack fundamentals.</h1>
+          <p class="hero-text"><%= portfolio.intro %></p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="/resume">Download Resume</a>
+            <a class="button button-secondary" href="#contact">Contact Me</a>
+          </div>
+        </div>
+
+        <aside class="profile-panel" aria-label="Profile summary">
+          <div class="profile-card">
+            <p class="profile-card__label">Currently capable of</p>
+            <h2>Frontend polish + backend structure</h2>
+            <p>
+              I can create responsive interfaces, organize Express routes, render EJS pages, serve
+              static assets, and package work in a professional project structure.
+            </p>
+          </div>
+
+          <div class="stat-grid">
+            <% portfolio.stats.forEach((stat) => { %>
+              <article class="stat-card">
+                <strong><%= stat.value %></strong>
+                <span><%= stat.label %></span>
+              </article>
+            <% }) %>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section-shell split-section" id="skills">
+        <div>
+          <p class="eyebrow">Skills</p>
+          <h2>Practical skills explained clearly.</h2>
+          <p class="section-text">
+            This section is written to show what you can actually do today: build pages, connect
+            backend routes, organize assets, and communicate your work professionally.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <% portfolio.skills.forEach((skill) => { %>
+            <article class="skill-card">
+              <h3><%= skill.title %></h3>
+              <ul>
+                <% skill.items.forEach((item) => { %>
+                  <li><%= item %></li>
+                <% }) %>
+              </ul>
+            </article>
+          <% }) %>
+        </div>
+      </section>
+
+      <section class="section-shell" id="projects">
+        <div class="section-heading">
+          <p class="eyebrow">Selected work</p>
+          <h2>Projects and experience signals.</h2>
+        </div>
+
+        <div class="project-grid">
+          <% portfolio.projects.forEach((project) => { %>
+            <article class="project-card">
+              <span><%= project.type %></span>
+              <h3><%= project.name %></h3>
+              <p><%= project.description %></p>
+            </article>
+          <% }) %>
+        </div>
+      </section>
+
+      <section class="section-shell split-section" id="journey">
+        <div>
+          <p class="eyebrow">Journey</p>
+          <h2>A focused path toward professional web development.</h2>
+          <p class="section-text">
+            Use this timeline to describe your current growth honestly while still making the page
+            feel confident and recruiter-friendly.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <% portfolio.timeline.forEach((item) => { %>
+            <article class="timeline-item">
+              <h3><%= item.title %></h3>
+              <p><%= item.text %></p>
+            </article>
+          <% }) %>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact">
+        <div class="section-shell contact-inner">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2>Let’s build something useful.</h2>
+            <p>
+              I am open to internships, entry-level development opportunities, freelance projects,
+              and collaborations where I can contribute and keep growing.
+            </p>
+          </div>
+
+          <div class="contact-actions">
+            <a class="button button-primary" href="mailto:<%= portfolio.email %>">Email Me</a>
+            <a class="button button-secondary" href="<%= portfolio.github %>" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="button button-secondary" href="<%= portfolio.linkedin %>" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
