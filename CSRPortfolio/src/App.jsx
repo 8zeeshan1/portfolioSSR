@@ -56,11 +56,12 @@ const journey = [
 ]
 
 function App() {
-  const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('portfolio-theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    return savedTheme || (prefersDark ? 'dark' : 'light')
-  })
+  const [theme, setTheme] = useState(() => {                                      // This is called the "lazy initializer" pattern for useState.
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches // It allows us to compute the initial state value only once,
+    return savedTheme || (prefersDark ? 'dark' : 'light')                         // when the component first mounts, instead of on every render. 
+    const savedTheme = localStorage.getItem('portfolio-theme')                    // In this case, we check localStorage and system preferences 
+  })                                                                              // to determine the initial theme without running this logic on every render.
+
 
   // React updates the root data attribute whenever theme state changes.
   // CSS variables then repaint the whole page without needing a reload.
@@ -69,9 +70,12 @@ function App() {
     localStorage.setItem('portfolio-theme', theme)
   }, [theme])
 
-  const toggleTheme = () => {
-    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'))
+  const toggleTheme = () => {                                               // Here we don't use to change the value as (theme === 'dark' ? 'light' : 'dark') because that would rely on the current value of theme at the time this function is called, which could lead to bugs if the state updates asynchronously. Instead, we use the functional form of setState, where we pass a function to setTheme that receives the current state value as an argument. This ensures that we are always working with the most up-to-date state when toggling between themes.
+    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark')) 
   }
+  // The actual problem here comes is "Stale State". In React state updates are batched and asynchronous, which means if we call the state change too many times a problem may occur that the state value we are working with is not the most current one, leading to unexpected behavior. By using the functional form of setState, we ensure that we are always working with the latest state value, even if multiple updates are queued up.
+
+  //Notes:
 
   return (
     <div className="portfolio-app">
