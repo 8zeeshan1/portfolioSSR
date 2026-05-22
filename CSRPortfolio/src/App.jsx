@@ -58,8 +58,9 @@ const journey = [
 function App() {
   const [theme, setTheme] = useState(() => {                                      // This is called the "lazy initializer" pattern for useState.
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches // It allows us to compute the initial state value only once,
+    const savedTheme = localStorage.getItem('portfolio-theme')
     return savedTheme || (prefersDark ? 'dark' : 'light')                         // when the component first mounts, instead of on every render. 
-    const savedTheme = localStorage.getItem('portfolio-theme')                    // In this case, we check localStorage and system preferences 
+                        // In this case, we check localStorage and system preferences 
   })                                                                              // to determine the initial theme without running this logic on every render.
 
 
